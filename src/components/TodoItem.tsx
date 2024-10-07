@@ -1,5 +1,5 @@
 import React from "react";
-import { Todo } from "../features/todos/types/todos";
+import { Todo } from "../types/todos";
 
 interface TodoItemProps {
   todo: Todo;

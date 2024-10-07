@@ -1,11 +1,6 @@
 import React from "react";
 import TodoItem from "./TodoItem";
-
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+import { Todo } from "../features/todos/types/todos";
 
 interface TodoListProps {
   todos: Todo[];

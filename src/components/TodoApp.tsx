@@ -1,49 +1,28 @@
-import React, { useState, useEffect } from "react";
-import TodoList from "./TodoList";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../app/store";
+import { addTodo, toggleTodo } from "../features/todos/todosSlice";
 import AddTodo from "./AddTodo";
-
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+import TodoList from "./TodoList";
 
 const TodoApp: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const todos = useSelector((state: RootState) => state.todos.todos);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const savedTodos = localStorage.getItem("todos");
-    if (savedTodos) {
-      setTodos(JSON.parse(savedTodos));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-  const addTodo = (text: string) => {
-    const newTodo: Todo = {
-      id: Date.now(),
-      text,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
+  const handleAddTodo = (title: string) => {
+    const newTodo = { id: Date.now(), title, completed: false };
+    dispatch(addTodo(newTodo));
   };
 
-  const toggleTodo = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+  const handleToggleTodo = (id: number) => {
+    dispatch(toggleTodo(id));
   };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Todo List</h1>
-      <AddTodo addTodo={addTodo} />
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
+      <AddTodo addTodo={handleAddTodo} />
+      <TodoList todos={todos} toggleTodo={handleToggleTodo} />
     </div>
   );
 };

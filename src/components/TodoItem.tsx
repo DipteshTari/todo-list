@@ -1,10 +1,5 @@
 import React from "react";
-
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+import { Todo } from "../features/todos/types/todos";
 
 interface TodoItemProps {
   todo: Todo;
@@ -17,7 +12,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, toggleTodo }) => {
       onClick={() => toggleTodo(todo.id)}
       className={`cursor-pointer p-2 ${todo.completed ? "line-through" : ""}`}
     >
-      {todo.text}
+      {todo.title}
     </li>
   );
 };
